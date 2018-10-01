@@ -41,10 +41,28 @@ int main(int argc, char** argv)
     }
     load(argv[1], &pic);
 
+    /*
     printf("Primeiros 10 pixels da imagem:\n");
     for(int i=0; i<10; i++) {
-        printf("[%02X %02X %02X] ", pic.img[i].r, pic.img[i].g, pic.img[i].b);
+        printf("[%03d %03d %03d] ", pic.img[i].r, pic.img[i].g, pic.img[i].b);
     }
+    */
+
+
+    //toGray
+    int totalPixels = pic.height*pic.width;
+
+    int grayImage[totalPixels];
+
+    for (int i = 0; i < totalPixels; i ++) {
+        //grayImage[i] = (int) ((int)image->img[i].r*0.3 + (int)image->img[i].g*0.59 + (int)image->img[i].b*0.11);
+        grayImage[i] = (int) (pic.img[i].r*0.3 + pic.img[i].g*0.59 + pic.img[i].b*0.11);
+    }
+
+    for (int i = 0; i < totalPixels; i++) {
+        printf("[%03d] ", grayImage[i]);
+    }
+
     printf("\n");
 
     free(pic.img);
