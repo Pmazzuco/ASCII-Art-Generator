@@ -63,6 +63,28 @@ int main(int argc, char** argv)
         printf("[%03d] ", grayImage[i]);
     }
 
+
+    /*
+    //Compact
+    int maxHorizontal = pic.width/4;
+    int maxVertical = pic.width/5;
+
+    char gradient[] = {'.', ':', 'c', 'o', 'C', 'O', '@'};
+    char output[maxHorizontal*maxVertical];
+
+
+    int media = 0;
+    for (int i = 0; i < maxHorizontal; i++) {
+
+        for (int j = 0; j < 4; j++) {
+
+            for (int k = 0; k < 5; k++) {
+
+            }
+        }
+    }
+    */
+
     printf("\n");
 
     free(pic.img);
