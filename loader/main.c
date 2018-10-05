@@ -29,7 +29,7 @@ void load(char* name, Img* pic)
         printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
         exit(1);
     }
-    printf("Load: %d x %d x %d\n", pic->width, pic->height, chan);
+    //printf("Load: %d x %d x %d\n", pic->width, pic->height, chan);
 }
 
 int main(int argc, char** argv)
@@ -49,46 +49,47 @@ int main(int argc, char** argv)
     */
 
 
-    //toGray
+
+
+    //Converter para preto e branco.
+
     int totalPixels = pic.height*pic.width;
 
+    int grayImage[pic.width][pic.height]; //Matriz dos pixels em preto e branco.
 
-    int grayImage[pic.width][pic.height];
-
+    //Passa por todos pixels da imagem de entrada, os converte para preto e branco e os coloca na matriz.
     for (int i = 0; i < pic.height; i ++) {
-        //grayImage[i] = (int) ((int)image->img[i].r*0.3 + (int)image->img[i].g*0.59 + (int)image->img[i].b*0.11);
         for (int j = 0; j < pic.width; j++) {
             grayImage[j][i] = (int) ((float)pic.img[i*pic.width+j].r*0.3 + (float)pic.img[i*pic.width+j].g*0.59 + (float)pic.img[i*pic.width+j].b*0.11);
         }
 
     }
 
-    /*
-    //test print toGray
-    for (int i = 0; i < pic.width; i++) {
-        for (int j = 0; j < pic.height; j++) {
-            printf("[%03d] ", grayImage[i][j]);
-        }
-    }
-    */
+    //Conversor de preto e brando para a saida final.
 
-
-    //Compact
-    float outSize;
+    float outSize; //Tamanho da saida em %.
     outSize = atof(argv[2]);
 
-    int blockHSize = (int)(1*100)/outSize;
-    int blockVSize = (int)(2*100)/outSize;
-    int maxHorizontal = (int)(pic.width/blockHSize);
-    int maxVertical = (int)(pic.height/blockVSize);
+    //Se o tamanho não for aceito, deixa-o em 100%.
+    if (outSize >= 0 || outSize <= 100) {
+        outSize == 100;
+    }
+
+    int blockHSize = (int)(1*100)/outSize; //Tamanho horizontal de cada bloco.
+    int blockVSize = (int)(2*100)/outSize; //Tamanho vertical de cada bloco.
+    int maxHorizontal = (int)(pic.width/blockHSize); //Quantiadde de blocos por linha na saida.
+    int maxVertical = (int)(pic.height/blockVSize); //Quantidade de linhas na saida.
 
     char gradient[] = {'.', ':', 'c', 'o', 'C', 'O', '@'};
     char output[maxHorizontal][maxVertical];
 
-    int media = 0;
+    int media = 0; //Media do bloco.
+    //Para cada bloco de pixels:
     for (int i = 0; i < maxVertical ; i++) {
         for (int j = 0; j < maxHorizontal; j++) {
             media = 0;
+
+            //Para cada pixel de um bloco:
             for (int k = i*blockVSize; k < i*blockVSize+blockVSize; k++) {
                 for (int l = j*blockHSize; l < j*blockHSize+blockHSize; l++) {
                     media = media + grayImage[l][k];
@@ -101,12 +102,15 @@ int main(int argc, char** argv)
         }
     }
 
+    //Saida.
 
+    //Inicio do HTML.
     printf("<html><head></head>");
     printf("<body style=\"background: black;\" leftmargin=0 topmargin=0> ");
     printf("<style> \npre  {\n\tcolor: white;\n\tfont-family: Courier;\n\tfont-size: 8px;\n}\n</style>\n");
     printf("<pre>\n");
-    //test print compact
+
+    //Imprime todos chars:
     for (int i = 0; i < maxVertical; i++) {
         printf("\t");
         for (int j = 0; j < maxHorizontal; j++) {
@@ -115,6 +119,7 @@ int main(int argc, char** argv)
         printf("\n");
     }
 
+    //Fim do HTML.
     printf("\n</pre>\n</body>\n</html>\n");
 
 
