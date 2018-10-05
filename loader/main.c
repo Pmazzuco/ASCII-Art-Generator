@@ -41,19 +41,9 @@ int main(int argc, char** argv)
     }
     load(argv[1], &pic);
 
-    /*
-    printf("Primeiros 10 pixels da imagem:\n");
-    for(int i=0; i<10; i++) {
-        printf("[%03d %03d %03d] ", pic.img[i].r, pic.img[i].g, pic.img[i].b);
-    }
-    */
-
-
 
 
     //Converter para preto e branco.
-
-    int totalPixels = pic.height*pic.width;
 
     int grayImage[pic.width][pic.height]; //Matriz dos pixels em preto e branco.
 
@@ -71,12 +61,12 @@ int main(int argc, char** argv)
     outSize = atof(argv[2]);
 
     //Se o tamanho não for aceito, deixa-o em 100%.
-    if (outSize >= 0 || outSize <= 100) {
+    if (outSize >= 200.0 || outSize <= 0.0) {
         outSize == 100;
     }
 
-    int blockHSize = (int)(1*100)/outSize; //Tamanho horizontal de cada bloco.
-    int blockVSize = (int)(2*100)/outSize; //Tamanho vertical de cada bloco.
+    int blockHSize = (int)(2*100)/outSize; //Tamanho horizontal de cada bloco.
+    int blockVSize = (int)(4*100)/outSize; //Tamanho vertical de cada bloco.
     int maxHorizontal = (int)(pic.width/blockHSize); //Quantiadde de blocos por linha na saida.
     int maxVertical = (int)(pic.height/blockVSize); //Quantidade de linhas na saida.
 
